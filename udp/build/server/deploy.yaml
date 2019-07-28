@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    loadbalancer.caicloud.io/test: "upd"
+  name: udp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      loadbalancer.caicloud.io/test: "upd"
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        loadbalancer.caicloud.io/test: "upd"
+    spec:
+      containers:
+      - image: cargo.caicloudprivatetest.com/caicloud/udp-server:v0.1.0-dirty
+        imagePullPolicy: IfNotPresent
+        name: udp
+        ports:
+        - containerPort: 80
+          protocol: UDP

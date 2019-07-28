@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    loadbalancer.caicloud.io/test: "upd"
+  name: udp
+  namespace: default
+spec:
+  ports:
+  - port: 9090
+    protocol: UDP 
+    targetPort: 9090
+  selector:
+    loadbalancer.caicloud.io/test: "upd"
+  type: ClusterIP
